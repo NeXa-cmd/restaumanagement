@@ -95,8 +95,12 @@ public class CartModel : PageModel
             return RedirectToPage();
         }
 
+        // Generate a unique order number
+        var orderNumber = $"ORD-{DateTime.UtcNow:yyyyMMddHHmmss}-{userId}";
+
         var order = new Order
         {
+            OrderNumber = orderNumber,
             UserId = userId,
             OrderDate = DateTime.UtcNow,
             Status = OrderStatus.Preparing,
@@ -105,7 +109,8 @@ public class CartModel : PageModel
             {
                 MenuItemId = i.MenuItemId,
                 Quantity = i.Quantity,
-                UnitPrice = i.MenuItem?.Price ?? 0
+                UnitPrice = i.MenuItem?.Price ?? 0,
+                TotalPrice = (i.MenuItem?.Price ?? 0) * i.Quantity
             }).ToList()
         };
 

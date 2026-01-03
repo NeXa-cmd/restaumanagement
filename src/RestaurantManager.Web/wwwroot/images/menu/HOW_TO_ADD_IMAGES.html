@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Image Instructions</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #4f46e5;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+        .step {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4f46e5;
+        }
+        .step h3 {
+            margin: 0 0 10px 0;
+            color: #1e293b;
+        }
+        .image-list {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        .image-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .image-item:last-child {
+            border-bottom: none;
+        }
+        code {
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #dc2626;
+        }
+        .note {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>??? How to Add Menu Item Images</h1>
+        <p class="subtitle">Follow these simple steps to add beautiful images to your menu items</p>
+
+        <div class="step">
+            <h3>Step 1: Prepare Your Images</h3>
+            <p>Collect or create images for each menu item. Recommended specifications:</p>
+            <ul>
+                <li><strong>Format:</strong> JPG, PNG, or WEBP</li>
+                <li><strong>Size:</strong> 800x600 pixels (or any 4:3 ratio)</li>
+                <li><strong>File Size:</strong> Under 500KB for best performance</li>
+                <li><strong>Quality:</strong> High resolution, well-lit, appetizing presentation</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h3>Step 2: Name Your Images</h3>
+            <p>Rename your images using this convention:</p>
+            <div class="image-list">
+                <div class="image-item"><code>item-1.jpg</code> - Spring Rolls</div>
+                <div class="image-item"><code>item-2.jpg</code> - Garlic Bread</div>
+                <div class="image-item"><code>item-3.jpg</code> - Caesar Salad</div>
+                <div class="image-item"><code>item-4.jpg</code> - Soup of the Day</div>
+                <div class="image-item"><code>item-5.jpg</code> - Grilled Salmon</div>
+                <div class="image-item"><code>item-6.jpg</code> - Ribeye Steak</div>
+                <div class="image-item"><code>item-7.jpg</code> - Chicken Parmesan</div>
+                <div class="image-item"><code>item-8.jpg</code> - Vegetable Pasta</div>
+                <div class="image-item"><code>item-9.jpg</code> - Lamb Chops</div>
+                <div class="image-item"><code>item-10.jpg</code> - Chocolate Lava Cake</div>
+                <div class="image-item"><code>item-11.jpg</code> - New York Cheesecake</div>
+                <div class="image-item"><code>item-12.jpg</code> - Tiramisu</div>
+                <div class="image-item"><code>item-13.jpg</code> - Fresh Lemonade</div>
+                <div class="image-item"><code>item-14.jpg</code> - Iced Tea</div>
+                <div class="image-item"><code>item-15.jpg</code> - Espresso</div>
+                <div class="image-item"><code>item-16.jpg</code> - House Wine</div>
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>Step 3: Place Images in the Menu Folder</h3>
+            <p>Copy your renamed images to:<br>
+            <code>wwwroot/images/menu/</code></p>
+        </div>
+
+        <div class="step">
+            <h3>Step 4: Update Database (One-Time)</h3>
+            <p>After stopping your application, run these commands:</p>
+            <code>dotnet ef migrations add AddMenuItemImages --project src/RestaurantManager.Infrastructure --startup-project src/RestaurantManager.Web</code><br><br>
+            <code>dotnet ef database update --project src/RestaurantManager.Infrastructure --startup-project src/RestaurantManager.Web</code>
+        </div>
+
+        <div class="step">
+            <h3>Step 5: Restart and Enjoy!</h3>
+            <p>Start your application and your menu items will display with beautiful images!</p>
+        </div>
+
+        <div class="note">
+            <strong>?? Note:</strong> If an image file is missing, the system will automatically display a placeholder icon instead. This ensures your menu always looks good even without all images.
+        </div>
+
+        <div class="note" style="background: #dbeafe; border-left-color: #3b82f6; margin-top: 20px;">
+            <strong>?? Pro Tip:</strong> You can find free food images on sites like Unsplash, Pexels, or Pixabay. Search for terms like "spring rolls", "salmon dish", "cheesecake", etc.
+        </div>
+    </div>
+</body>
+</html>

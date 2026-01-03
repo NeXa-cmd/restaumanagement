@@ -25,7 +25,28 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<RestaurantDbContext>();
-    db.Database.Migrate();
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+    
+    try
+    {
+        logger.LogInformation("Applying database migrations...");
+        db.Database.Migrate();
+        logger.LogInformation("Database migrations applied successfully.");
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "An error occurred while migrating the database. Details: {Message}", ex.Message);
+        
+        if (app.Environment.IsDevelopment())
+        {
+            throw; // Re-throw in development to see the error
+        }
+        else
+        {
+            // In production, log but don't crash the app
+            logger.LogWarning("Application will continue without database migration.");
+        }
+    }
 }
 
 // Configure the HTTP request pipeline.

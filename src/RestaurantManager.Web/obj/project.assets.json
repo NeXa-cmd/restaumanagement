@@ -3839,38 +3839,46 @@
     ]
   },
   "packageFolders": {
-    "/Users/vesion2/.nuget/packages/": {}
+    "C:\\Users\\Kholoud\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/vesion2/Documents/netproj/src/RestaurantManager.Web/RestaurantManager.Web.csproj",
+      "projectUniqueName": "C:\\Users\\Kholoud\\Documents\\4IIR\\.Net\\restaumanagement\\src\\RestaurantManager.Web\\RestaurantManager.Web.csproj",
       "projectName": "RestaurantManager.Web",
-      "projectPath": "/Users/vesion2/Documents/netproj/src/RestaurantManager.Web/RestaurantManager.Web.csproj",
-      "packagesPath": "/Users/vesion2/.nuget/packages/",
-      "outputPath": "/Users/vesion2/Documents/netproj/src/RestaurantManager.Web/obj/",
+      "projectPath": "C:\\Users\\Kholoud\\Documents\\4IIR\\.Net\\restaumanagement\\src\\RestaurantManager.Web\\RestaurantManager.Web.csproj",
+      "packagesPath": "C:\\Users\\Kholoud\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Kholoud\\Documents\\4IIR\\.Net\\restaumanagement\\src\\RestaurantManager.Web\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/Users/vesion2/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\Kholoud\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
           "projectReferences": {
-            "/Users/vesion2/Documents/netproj/src/RestaurantManager.Application/RestaurantManager.Application.csproj": {
-              "projectPath": "/Users/vesion2/Documents/netproj/src/RestaurantManager.Application/RestaurantManager.Application.csproj"
+            "C:\\Users\\Kholoud\\Documents\\4IIR\\.Net\\restaumanagement\\src\\RestaurantManager.Application\\RestaurantManager.Application.csproj": {
+              "projectPath": "C:\\Users\\Kholoud\\Documents\\4IIR\\.Net\\restaumanagement\\src\\RestaurantManager.Application\\RestaurantManager.Application.csproj"
             },
-            "/Users/vesion2/Documents/netproj/src/RestaurantManager.Domain/RestaurantManager.Domain.csproj": {
-              "projectPath": "/Users/vesion2/Documents/netproj/src/RestaurantManager.Domain/RestaurantManager.Domain.csproj"
+            "C:\\Users\\Kholoud\\Documents\\4IIR\\.Net\\restaumanagement\\src\\RestaurantManager.Domain\\RestaurantManager.Domain.csproj": {
+              "projectPath": "C:\\Users\\Kholoud\\Documents\\4IIR\\.Net\\restaumanagement\\src\\RestaurantManager.Domain\\RestaurantManager.Domain.csproj"
             },
-            "/Users/vesion2/Documents/netproj/src/RestaurantManager.Infrastructure/RestaurantManager.Infrastructure.csproj": {
-              "projectPath": "/Users/vesion2/Documents/netproj/src/RestaurantManager.Infrastructure/RestaurantManager.Infrastructure.csproj"
+            "C:\\Users\\Kholoud\\Documents\\4IIR\\.Net\\restaumanagement\\src\\RestaurantManager.Infrastructure\\RestaurantManager.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\Kholoud\\Documents\\4IIR\\.Net\\restaumanagement\\src\\RestaurantManager.Infrastructure\\RestaurantManager.Infrastructure.csproj"
             }
           }
         }
@@ -3917,7 +3925,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.101/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.AspNetCore": "(,10.0.32767]",
           "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
