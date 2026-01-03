@@ -1,0 +1,11 @@
+/Users/vesion2/Documents/netproj/src/RestaurantManager.Domain/bin/Debug/net10.0/RestaurantManager.Domain.deps.json
+/Users/vesion2/Documents/netproj/src/RestaurantManager.Domain/bin/Debug/net10.0/RestaurantManager.Domain.dll
+/Users/vesion2/Documents/netproj/src/RestaurantManager.Domain/bin/Debug/net10.0/RestaurantManager.Domain.pdb
+/Users/vesion2/Documents/netproj/src/RestaurantManager.Domain/obj/Debug/net10.0/RestaurantManager.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/vesion2/Documents/netproj/src/RestaurantManager.Domain/obj/Debug/net10.0/RestaurantManager.Domain.AssemblyInfoInputs.cache
+/Users/vesion2/Documents/netproj/src/RestaurantManager.Domain/obj/Debug/net10.0/RestaurantManager.Domain.AssemblyInfo.cs
+/Users/vesion2/Documents/netproj/src/RestaurantManager.Domain/obj/Debug/net10.0/RestaurantManager.Domain.csproj.CoreCompileInputs.cache
+/Users/vesion2/Documents/netproj/src/RestaurantManager.Domain/obj/Debug/net10.0/RestaurantManager.Domain.dll
+/Users/vesion2/Documents/netproj/src/RestaurantManager.Domain/obj/Debug/net10.0/refint/RestaurantManager.Domain.dll
+/Users/vesion2/Documents/netproj/src/RestaurantManager.Domain/obj/Debug/net10.0/RestaurantManager.Domain.pdb
+/Users/vesion2/Documents/netproj/src/RestaurantManager.Domain/obj/Debug/net10.0/ref/RestaurantManager.Domain.dll

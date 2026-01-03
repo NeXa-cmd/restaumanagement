@@ -1,0 +1,259 @@
+@page
+@model RestaurantManager.Web.Pages.ProfileModel
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<style>
+    .profile-layout { display: grid; grid-template-columns: 320px 1fr; gap: 24px; }
+    
+    @@media (max-width: 900px) { .profile-layout { grid-template-columns: 1fr; } }
+    
+    .card {
+        background: #fff;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        padding: 24px;
+    }
+    
+    body.dark-mode .card { background: #1e293b; border-color: #334155; }
+    
+    .card-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .profile-sidebar { display: flex; flex-direction: column; gap: 24px; }
+    
+    .profile-header { text-align: center; padding-bottom: 20px; border-bottom: 1px solid #e2e8f0; margin-bottom: 20px; }
+    body.dark-mode .profile-header { border-bottom-color: #334155; }
+    
+    .profile-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 36px;
+        color: #fff;
+        margin: 0 auto 16px;
+        font-weight: 700;
+    }
+    
+    .profile-name { font-size: 18px; font-weight: 600; color: #1e293b; margin-bottom: 4px; }
+    body.dark-mode .profile-name { color: #f1f5f9; }
+    
+    .profile-email { font-size: 14px; color: #64748b; }
+    
+    .profile-main { display: flex; flex-direction: column; gap: 24px; }
+    
+    .form-group { margin-bottom: 20px; }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        font-size: 13px;
+        color: #64748b;
+    }
+    
+    .form-group input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.2s;
+        background: #fff;
+        color: #1e293b;
+    }
+    
+    body.dark-mode .form-group input { background: #0f172a; border-color: #334155; color: #f1f5f9; }
+    
+    .form-group input:focus { outline: none; border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
+    
+    .btn-save {
+        padding: 12px 24px;
+        background: #4f46e5;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-weight: 500;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .btn-save:hover { background: #4338ca; }
+    
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    
+    .stat-card {
+        text-align: center;
+        padding: 20px;
+        background: #f8fafc;
+        border-radius: 10px;
+    }
+    
+    body.dark-mode .stat-card { background: #0f172a; }
+    
+    .stat-value { font-size: 28px; font-weight: 700; color: #4f46e5; margin-bottom: 4px; }
+    .stat-label { font-size: 13px; color: #64748b; }
+    
+    .theme-toggle { display: flex; gap: 12px; }
+    
+    .theme-btn {
+        flex: 1;
+        padding: 16px;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        background: #fff;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        color: #64748b;
+    }
+    
+    body.dark-mode .theme-btn { background: #0f172a; border-color: #334155; }
+    
+    .theme-btn:hover { border-color: #4f46e5; }
+    
+    .theme-btn.active { border-color: #4f46e5; background: rgba(79, 70, 229, 0.1); color: #4f46e5; }
+    
+    .theme-btn i { font-size: 24px; }
+    .theme-btn span { font-weight: 500; font-size: 13px; }
+</style>
+
+<div class="profile-layout">
+    <aside class="profile-sidebar">
+        <div class="card">
+            <div class="profile-header">
+                <div class="profile-avatar">@(Model.CurrentUser?.FullName.FirstOrDefault().ToString().ToUpper() ?? "U")</div>
+                <div class="profile-name">@(Model.CurrentUser?.FullName ?? "User")</div>
+                <div class="profile-email">@(Model.CurrentUser?.Email ?? "")</div>
+            </div>
+            
+            <div class="card-title"><i class="fas fa-chart-bar"></i> Statistics</div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">@Model.ActiveOrdersCount</div>
+                    <div class="stat-label">Active</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">@Model.CompletedOrdersCount</div>
+                    <div class="stat-label">Completed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">$@Model.TotalSpent.ToString("F0")</div>
+                    <div class="stat-label">Spent</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-title"><i class="fas fa-palette"></i> Appearance</div>
+            <div class="theme-toggle">
+                <button class="theme-btn" id="lightBtn" onclick="setLightTheme()">
+                    <i class="fas fa-sun"></i>
+                    <span>Light</span>
+                </button>
+                <button class="theme-btn" id="darkBtn" onclick="setDarkTheme()">
+                    <i class="fas fa-moon"></i>
+                    <span>Dark</span>
+                </button>
+            </div>
+        </div>
+    </aside>
+    
+    <div class="profile-main">
+        <div class="card">
+            <div class="card-title"><i class="fas fa-user"></i> Personal Information</div>
+            <form>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" value="@(Model.CurrentUser?.FullName ?? "")" placeholder="Your name" />
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" value="@(Model.CurrentUser?.Email ?? "")" placeholder="Email" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" placeholder="(123) 456-7890" />
+                    </div>
+                    <div class="form-group">
+                        <label>Date of Birth</label>
+                        <input type="date" />
+                    </div>
+                </div>
+                <button type="button" class="btn-save" onclick="alert('Profile saved! (Demo)')">
+                    <i class="fas fa-save"></i> Save Changes
+                </button>
+            </form>
+        </div>
+        
+        <div class="card">
+            <div class="card-title"><i class="fas fa-lock"></i> Security</div>
+            <form>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="form-group">
+                        <label>Current Password</label>
+                        <input type="password" placeholder="Enter current password" />
+                    </div>
+                    <div></div>
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" placeholder="Enter new password" />
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm New Password</label>
+                        <input type="password" placeholder="Confirm new password" />
+                    </div>
+                </div>
+                <button type="button" class="btn-save" onclick="alert('Password updated! (Demo)')">
+                    <i class="fas fa-key"></i> Update Password
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', updateThemeButtons);
+        
+        function setLightTheme() {
+            document.body.classList.remove('dark-mode');
+            localStorage.setItem('theme', 'light');
+            updateThemeButtons();
+        }
+        
+        function setDarkTheme() {
+            document.body.classList.add('dark-mode');
+            localStorage.setItem('theme', 'dark');
+            updateThemeButtons();
+        }
+        
+        function updateThemeButtons() {
+            const isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('lightBtn').classList.toggle('active', !isDark);
+            document.getElementById('darkBtn').classList.toggle('active', isDark);
+        }
+    </script>
+}
