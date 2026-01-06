@@ -1,0 +1,55 @@
+name: Deploy to VPS
+# - DB_CONNECTION_STRING: Your Azure SQL connection string (optional, can be in .env on VPS)
+# - VPS_SSH_KEY: Private SSH key for authentication
+# - VPS_USERNAME: SSH username (usually root or your user)
+# - VPS_HOST: Your VPS IP address or domain
+# GitHub Secrets needed:
+
+          rm restaurant-manager.tar.gz
+          docker system prune -f
+          docker-compose up -d
+          docker-compose down
+          docker load < restaurant-manager.tar.gz
+          cd /opt/restaurant-manager
+        script: |
+        key: ${{ secrets.VPS_SSH_KEY }}
+        username: ${{ secrets.VPS_USERNAME }}
+        host: ${{ secrets.VPS_HOST }}
+      with:
+      uses: appleboy/ssh-action@v1.0.3
+    - name: Deploy on VPS
+    
+        target: "/opt/restaurant-manager"
+        source: "restaurant-manager.tar.gz,docker-compose.yml"
+        key: ${{ secrets.VPS_SSH_KEY }}
+        username: ${{ secrets.VPS_USERNAME }}
+        host: ${{ secrets.VPS_HOST }}
+      with:
+      uses: appleboy/scp-action@v0.1.7
+    - name: Copy files to VPS
+    
+      run: docker save restaurant-manager:latest | gzip > restaurant-manager.tar.gz
+    - name: Save Docker image
+    
+        docker tag restaurant-manager:${{ github.sha }} restaurant-manager:latest
+        docker build -t restaurant-manager:${{ github.sha }} .
+      run: |
+    - name: Build Docker image
+    
+      uses: docker/setup-buildx-action@v3
+    - name: Set up Docker Buildx
+    
+      uses: actions/checkout@v4
+    - name: Checkout code
+    steps:
+    
+    runs-on: ubuntu-latest
+  build-and-deploy:
+jobs:
+
+  workflow_dispatch:
+    branches: [ main, master ]
+  push:
+on:
+
+

@@ -1,0 +1,41 @@
+    driver: bridge
+  restaurant-network:
+networks:
+
+        max-file: "3"
+        max-size: "10m"
+      options:
+      driver: "json-file"
+    logging:
+          memory: 256M
+          cpus: '0.5'
+        reservations:
+          memory: 512M
+          cpus: '1.0'
+        limits:
+      resources:
+    deploy:
+      start_period: 40s
+      retries: 3
+      timeout: 10s
+      interval: 30s
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+    healthcheck:
+      - restaurant-network
+    networks:
+    restart: unless-stopped
+      - ConnectionStrings__DefaultConnection=${DB_CONNECTION_STRING}
+      # Use environment variables from .env file for security
+      - ASPNETCORE_URLS=http://+:8080
+      - ASPNETCORE_ENVIRONMENT=Production
+    environment:
+      - "8080:8080"
+    ports:
+    container_name: restaurant-manager
+      dockerfile: Dockerfile
+      context: .
+    build:
+  restaurantmanager:
+services:
+
+

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BQbG8mUT59w=",
+  "dgSpecHash": "4iXs4zt4WlU=",
   "success": true,
-  "projectFilePath": "/Users/vesion2/Documents/netproj/src/RestaurantManager.Application/RestaurantManager.Application.csproj",
+  "projectFilePath": "/Users/vesion2/RiderProjects/restaumanagement/src/RestaurantManager.Application/RestaurantManager.Application.csproj",
   "expectedPackageFiles": [
     "/Users/vesion2/.nuget/packages/automapper/16.0.0/automapper.16.0.0.nupkg.sha512",
     "/Users/vesion2/.nuget/packages/fluentvalidation/12.1.1/fluentvalidation.12.1.1.nupkg.sha512",
