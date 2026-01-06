@@ -44,6 +44,7 @@ public class LoginModel : PageModel
             HttpContext.Session.SetString("UserId", user.Id.ToString());
             HttpContext.Session.SetString("UserEmail", user.Email);
             HttpContext.Session.SetString("UserName", user.FullName);
+            HttpContext.Session.SetString("UserRole", user.Role.ToString());
             HttpContext.Session.SetString("IsLoggedIn", "true");
             
             return RedirectToPage("/Index");

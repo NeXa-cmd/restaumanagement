@@ -21,7 +21,7 @@ builder.Services.AddSession(options =>
 
 var app = builder.Build();
 
-// Apply migrations and seed data on startup
+// Ensure database exists and apply migrations on startup
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<RestaurantDbContext>();
@@ -29,22 +29,28 @@ using (var scope = app.Services.CreateScope())
     
     try
     {
-        logger.LogInformation("Applying database migrations...");
-        db.Database.Migrate();
-        logger.LogInformation("Database migrations applied successfully.");
+        logger.LogInformation("Checking database...");
+        
+        // EnsureCreated will create the database if it doesn't exist
+        // It won't modify an existing database
+        var created = await db.Database.EnsureCreatedAsync();
+        
+        if (created)
+        {
+            logger.LogInformation("Database created with seed data.");
+        }
+        else
+        {
+            logger.LogInformation("Database already exists.");
+        }
     }
     catch (Exception ex)
     {
-        logger.LogError(ex, "An error occurred while migrating the database. Details: {Message}", ex.Message);
+        logger.LogError(ex, "An error occurred while setting up the database. Details: {Message}", ex.Message);
         
         if (app.Environment.IsDevelopment())
         {
             throw; // Re-throw in development to see the error
-        }
-        else
-        {
-            // In production, log but don't crash the app
-            logger.LogWarning("Application will continue without database migration.");
         }
     }
 }

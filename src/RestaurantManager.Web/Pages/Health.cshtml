@@ -1,0 +1,9 @@
+@page
+@{
+    Response.StatusCode = 200;
+    Response.ContentType = "application/json";
+}
+{
+  "status": "healthy",
+  "timestamp": "@DateTime.UtcNow.ToString("o")"
+}

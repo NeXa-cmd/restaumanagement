@@ -1,0 +1,188 @@
+@page
+@model RestaurantManager.Web.Pages.Admin.MenuItems.IndexModel
+@{
+    ViewData["Title"] = "Manage Menu Items";
+}
+
+<style>
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+    
+    .btn-primary {
+        background: #4f46e5;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 500;
+        font-size: 14px;
+        transition: all 0.2s;
+        border: none;
+        cursor: pointer;
+    }
+    
+    .btn-primary:hover { background: #4338ca; }
+    
+    .table-container {
+        background: #fff;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        overflow: hidden;
+    }
+    
+    body.dark-mode .table-container { background: #1e293b; border-color: #334155; }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    thead {
+        background: #f8fafc;
+        border-bottom: 1px solid #e2e8f0;
+    }
+    
+    body.dark-mode thead { background: #0f172a; border-bottom-color: #334155; }
+    
+    th {
+        padding: 16px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 13px;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    td {
+        padding: 16px;
+        border-bottom: 1px solid #f1f5f9;
+        color: #334155;
+    }
+    
+    body.dark-mode td { border-bottom-color: #334155; color: #e2e8f0; }
+    
+    tbody tr:hover { background: #f8fafc; }
+    body.dark-mode tbody tr:hover { background: #0f172a; }
+    
+    .item-name {
+        font-weight: 600;
+        color: #1e293b;
+    }
+    
+    body.dark-mode .item-name { color: #f1f5f9; }
+    
+    .item-description {
+        font-size: 13px;
+        color: #64748b;
+        margin-top: 4px;
+    }
+    
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+    
+    .badge-available { background: #dcfce7; color: #166534; }
+    .badge-unavailable { background: #fee2e2; color: #991b1b; }
+    
+    body.dark-mode .badge-available { background: rgba(16,185,129,0.2); color: #6ee7b7; }
+    body.dark-mode .badge-unavailable { background: rgba(239,68,68,0.2); color: #fca5a5; }
+    
+    .actions {
+        display: flex;
+        gap: 8px;
+    }
+    
+    .btn-sm {
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 500;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+    
+    .btn-edit { background: #dbeafe; color: #1e40af; }
+    .btn-edit:hover { background: #bfdbfe; }
+    
+    .btn-delete { background: #fee2e2; color: #991b1b; }
+    .btn-delete:hover { background: #fecaca; }
+    
+    body.dark-mode .btn-edit { background: rgba(59,130,246,0.2); color: #93c5fd; }
+    body.dark-mode .btn-delete { background: rgba(239,68,68,0.2); color: #fca5a5; }
+</style>
+
+<div class="page-header">
+    <div>
+        <h1 style="margin: 0; font-size: 24px; font-weight: 700;">Menu Items</h1>
+        <p style="margin: 4px 0 0 0; color: #64748b; font-size: 14px;">Manage your restaurant's menu items</p>
+    </div>
+    <a href="/Admin/MenuItems/Create" class="btn-primary">
+        <i class="fas fa-plus"></i>
+        Add Menu Item
+    </a>
+</div>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.MenuItems)
+            {
+                <tr>
+                    <td>
+                        <div class="item-name">@item.Name</div>
+                        <div class="item-description">@item.Description</div>
+                    </td>
+                    <td>@item.Category</td>
+                    <td><strong>@item.Price.ToString("F2") MAD</strong></td>
+                    <td>
+                        @if (item.IsAvailable)
+                        {
+                            <span class="badge badge-available">Available</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-unavailable">Unavailable</span>
+                        }
+                    </td>
+                    <td>
+                        <div class="actions">
+                            <a href="/Admin/MenuItems/Edit?id=@item.Id" class="btn-sm btn-edit">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <a href="/Admin/MenuItems/Delete?id=@item.Id" class="btn-sm btn-delete">
+                                <i class="fas fa-trash"></i> Delete
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

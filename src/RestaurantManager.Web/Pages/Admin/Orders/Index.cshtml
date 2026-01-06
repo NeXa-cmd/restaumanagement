@@ -1,0 +1,177 @@
+@page
+@model RestaurantManager.Web.Pages.Admin.Orders.IndexModel
+@{
+    ViewData["Title"] = "Manage Orders";
+}
+
+<style>
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+    
+    .table-container {
+        background: #fff;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        overflow: hidden;
+    }
+    
+    body.dark-mode .table-container { background: #1e293b; border-color: #334155; }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    thead {
+        background: #f8fafc;
+        border-bottom: 1px solid #e2e8f0;
+    }
+    
+    body.dark-mode thead { background: #0f172a; border-bottom-color: #334155; }
+    
+    th {
+        padding: 16px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 13px;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    td {
+        padding: 16px;
+        border-bottom: 1px solid #f1f5f9;
+        color: #334155;
+    }
+    
+    body.dark-mode td { border-bottom-color: #334155; color: #e2e8f0; }
+    
+    tbody tr:hover { background: #f8fafc; }
+    body.dark-mode tbody tr:hover { background: #0f172a; }
+    
+    .order-number {
+        font-weight: 600;
+        color: #4f46e5;
+    }
+    
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+    
+    .badge-pending { background: #fef3c7; color: #92400e; }
+    .badge-preparing { background: #dbeafe; color: #1e40af; }
+    .badge-completed { background: #dcfce7; color: #166534; }
+    .badge-cancelled { background: #fee2e2; color: #991b1b; }
+    
+    body.dark-mode .badge-pending { background: rgba(245,158,11,0.2); color: #fcd34d; }
+    body.dark-mode .badge-preparing { background: rgba(59,130,246,0.2); color: #93c5fd; }
+    body.dark-mode .badge-completed { background: rgba(16,185,129,0.2); color: #6ee7b7; }
+    body.dark-mode .badge-cancelled { background: rgba(239,68,68,0.2); color: #fca5a5; }
+    
+    .actions {
+        display: flex;
+        gap: 8px;
+    }
+    
+    .btn-sm {
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 500;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+    
+    .btn-view { background: #dbeafe; color: #1e40af; }
+    .btn-view:hover { background: #bfdbfe; }
+    
+    .btn-status { background: #dcfce7; color: #166534; }
+    .btn-status:hover { background: #bbf7d0; }
+    
+    body.dark-mode .btn-view { background: rgba(59,130,246,0.2); color: #93c5fd; }
+    body.dark-mode .btn-status { background: rgba(16,185,129,0.2); color: #6ee7b7; }
+</style>
+
+<div class="page-header">
+    <div>
+        <h1 style="margin: 0; font-size: 24px; font-weight: 700;">Orders Management</h1>
+        <p style="margin: 4px 0 0 0; color: #64748b; font-size: 14px;">View and manage customer orders</p>
+    </div>
+</div>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Order #</th>
+                <th>Customer</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model.Orders)
+            {
+                <tr>
+                    <td>
+                        <span class="order-number">#@order.OrderNumber</span>
+                    </td>
+                    <td>@order.User.FullName</td>
+                    <td>@order.OrderDate.ToString("MMM dd, yyyy HH:mm")</td>
+                    <td><strong>@order.TotalAmount.ToString("F2") MAD</strong></td>
+                    <td>
+                        @switch (order.Status)
+                        {
+                            case RestaurantManager.Domain.Entities.OrderStatus.Pending:
+                                <span class="badge badge-pending">Pending</span>
+                                break;
+                            case RestaurantManager.Domain.Entities.OrderStatus.Preparing:
+                                <span class="badge badge-preparing">Preparing</span>
+                                break;
+                            case RestaurantManager.Domain.Entities.OrderStatus.Completed:
+                                <span class="badge badge-completed">Completed</span>
+                                break;
+                            case RestaurantManager.Domain.Entities.OrderStatus.Cancelled:
+                                <span class="badge badge-cancelled">Cancelled</span>
+                                break;
+                        }
+                    </td>
+                    <td>
+                        <div class="actions">
+                            <a href="/Admin/Orders/Details?id=@order.Id" class="btn-sm btn-view">
+                                <i class="fas fa-eye"></i> View
+                            </a>
+                            @if (order.Status != RestaurantManager.Domain.Entities.OrderStatus.Completed && 
+                                 order.Status != RestaurantManager.Domain.Entities.OrderStatus.Cancelled)
+                            {
+                                <form method="post" asp-page-handler="UpdateStatus" style="display: inline;">
+                                    <input type="hidden" name="orderId" value="@order.Id" />
+                                    <button type="submit" class="btn-sm btn-status">
+                                        <i class="fas fa-check"></i> Next Status
+                                    </button>
+                                </form>
+                            }
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

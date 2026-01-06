@@ -49,38 +49,6 @@
     
     .setting-desc { font-size: 13px; color: #64748b; }
     
-    .toggle-switch {
-        position: relative;
-        width: 48px;
-        height: 26px;
-    }
-    
-    .toggle-switch input { opacity: 0; width: 0; height: 0; }
-    
-    .toggle-slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: #cbd5e1;
-        border-radius: 26px;
-        transition: 0.3s;
-    }
-    
-    .toggle-slider:before {
-        position: absolute;
-        content: "";
-        height: 20px;
-        width: 20px;
-        left: 3px;
-        bottom: 3px;
-        background: #fff;
-        border-radius: 50%;
-        transition: 0.3s;
-    }
-    
-    .toggle-switch input:checked + .toggle-slider { background: #4f46e5; }
-    .toggle-switch input:checked + .toggle-slider:before { transform: translateX(22px); }
-    
     .select-input {
         padding: 10px 14px;
         border: 1px solid #e2e8f0;
@@ -128,46 +96,35 @@
     body.dark-mode .btn-outline { border-color: #334155; color: #94a3b8; }
     
     .btn-outline:hover { border-color: #4f46e5; color: #4f46e5; }
+    
+    .theme-toggle { display: flex; gap: 12px; margin-top: 12px; }
+    
+    .theme-btn {
+        flex: 1;
+        padding: 16px;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        background: #fff;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        color: #64748b;
+    }
+    
+    body.dark-mode .theme-btn { background: #0f172a; border-color: #334155; }
+    
+    .theme-btn:hover { border-color: #4f46e5; }
+    
+    .theme-btn.active { border-color: #4f46e5; background: rgba(79, 70, 229, 0.1); color: #4f46e5; }
+    
+    .theme-btn i { font-size: 24px; }
+    .theme-btn span { font-weight: 500; font-size: 13px; }
 </style>
 
 <div class="settings-grid">
-    <div class="card">
-        <h3 class="card-title"><i class="fas fa-bell"></i> Notifications</h3>
-        
-        <div class="setting-item">
-            <div class="setting-info">
-                <div class="setting-label">Push Notifications</div>
-                <div class="setting-desc">Receive order updates on your device</div>
-            </div>
-            <label class="toggle-switch">
-                <input type="checkbox" checked>
-                <span class="toggle-slider"></span>
-            </label>
-        </div>
-        
-        <div class="setting-item">
-            <div class="setting-info">
-                <div class="setting-label">Email Notifications</div>
-                <div class="setting-desc">Get order confirmations via email</div>
-            </div>
-            <label class="toggle-switch">
-                <input type="checkbox" checked>
-                <span class="toggle-slider"></span>
-            </label>
-        </div>
-        
-        <div class="setting-item">
-            <div class="setting-info">
-                <div class="setting-label">Promotional Emails</div>
-                <div class="setting-desc">Receive offers and promotions</div>
-            </div>
-            <label class="toggle-switch">
-                <input type="checkbox">
-                <span class="toggle-slider"></span>
-            </label>
-        </div>
-    </div>
-    
     <div class="card">
         <h3 class="card-title"><i class="fas fa-globe"></i> Preferences</h3>
         
@@ -180,6 +137,7 @@
                 <option>English</option>
                 <option>Spanish</option>
                 <option>French</option>
+                <option>Arabic</option>
             </select>
         </div>
         
@@ -209,38 +167,23 @@
     </div>
     
     <div class="card">
-        <h3 class="card-title"><i class="fas fa-shield-alt"></i> Privacy</h3>
+        <h3 class="card-title"><i class="fas fa-palette"></i> Appearance</h3>
         
-        <div class="setting-item">
-            <div class="setting-info">
-                <div class="setting-label">Order History</div>
-                <div class="setting-desc">Save your order history</div>
+        <div class="setting-item" style="flex-direction: column; align-items: flex-start;">
+            <div class="setting-info" style="margin-bottom: 12px;">
+                <div class="setting-label">Theme</div>
+                <div class="setting-desc">Choose your preferred theme</div>
             </div>
-            <label class="toggle-switch">
-                <input type="checkbox" checked>
-                <span class="toggle-slider"></span>
-            </label>
-        </div>
-        
-        <div class="setting-item">
-            <div class="setting-info">
-                <div class="setting-label">Analytics</div>
-                <div class="setting-desc">Help improve our service</div>
+            <div class="theme-toggle">
+                <button class="theme-btn" id="lightBtn" onclick="setLightTheme()">
+                    <i class="fas fa-sun"></i>
+                    <span>Light</span>
+                </button>
+                <button class="theme-btn" id="darkBtn" onclick="setDarkTheme()">
+                    <i class="fas fa-moon"></i>
+                    <span>Dark</span>
+                </button>
             </div>
-            <label class="toggle-switch">
-                <input type="checkbox" checked>
-                <span class="toggle-slider"></span>
-            </label>
-        </div>
-        
-        <div class="setting-item">
-            <div class="setting-info">
-                <div class="setting-label">Download Data</div>
-                <div class="setting-desc">Export your personal data</div>
-            </div>
-            <button class="btn-outline" onclick="alert('Download started! (Demo)')">
-                <i class="fas fa-download"></i> Export
-            </button>
         </div>
     </div>
     
@@ -266,3 +209,27 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', updateThemeButtons);
+        
+        function setLightTheme() {
+            document.body.classList.remove('dark-mode');
+            localStorage.setItem('theme', 'light');
+            updateThemeButtons();
+        }
+        
+        function setDarkTheme() {
+            document.body.classList.add('dark-mode');
+            localStorage.setItem('theme', 'dark');
+            updateThemeButtons();
+        }
+        
+        function updateThemeButtons() {
+            const isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('lightBtn').classList.toggle('active', !isDark);
+            document.getElementById('darkBtn').classList.toggle('active', isDark);
+        }
+    </script>
+}

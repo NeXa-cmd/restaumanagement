@@ -1,0 +1,279 @@
+@page
+@model RestaurantManager.Web.Pages.Admin.Orders.DetailsModel
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<style>
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    
+    .card {
+        background: #fff;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        padding: 32px;
+        margin-bottom: 24px;
+    }
+    
+    body.dark-mode .card { background: #1e293b; border-color: #334155; }
+    
+    .order-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 32px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+    
+    body.dark-mode .order-header { border-bottom-color: #334155; }
+    
+    .order-number {
+        font-size: 28px;
+        font-weight: 700;
+        color: #4f46e5;
+        margin-bottom: 8px;
+    }
+    
+    .order-date {
+        color: #64748b;
+        font-size: 14px;
+    }
+    
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+    
+    .badge-pending { background: #fef3c7; color: #92400e; }
+    .badge-preparing { background: #dbeafe; color: #1e40af; }
+    .badge-completed { background: #dcfce7; color: #166534; }
+    .badge-cancelled { background: #fee2e2; color: #991b1b; }
+    
+    body.dark-mode .badge-pending { background: rgba(245,158,11,0.2); color: #fcd34d; }
+    body.dark-mode .badge-preparing { background: rgba(59,130,246,0.2); color: #93c5fd; }
+    body.dark-mode .badge-completed { background: rgba(16,185,129,0.2); color: #6ee7b7; }
+    body.dark-mode .badge-cancelled { background: rgba(239,68,68,0.2); color: #fca5a5; }
+    
+    .info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-bottom: 32px;
+    }
+    
+    .info-item {
+        padding: 16px;
+        background: #f8fafc;
+        border-radius: 8px;
+    }
+    
+    body.dark-mode .info-item { background: #0f172a; }
+    
+    .info-label {
+        font-size: 12px;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 4px;
+    }
+    
+    .info-value {
+        font-size: 16px;
+        font-weight: 600;
+        color: #1e293b;
+    }
+    
+    body.dark-mode .info-value { color: #f1f5f9; }
+    
+    .section-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1e293b;
+        margin-bottom: 16px;
+    }
+    
+    body.dark-mode .section-title { color: #f1f5f9; }
+    
+    .order-items {
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    body.dark-mode .order-items { border-color: #334155; }
+    
+    .item-row {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        padding: 16px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+    
+    body.dark-mode .item-row { border-bottom-color: #334155; }
+    
+    .item-row:last-child { border-bottom: none; }
+    
+    .item-row.header {
+        background: #f8fafc;
+        font-weight: 600;
+        font-size: 12px;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    body.dark-mode .item-row.header { background: #0f172a; }
+    
+    .total-section {
+        margin-top: 24px;
+        padding-top: 24px;
+        border-top: 1px solid #e2e8f0;
+    }
+    
+    body.dark-mode .total-section { border-top-color: #334155; }
+    
+    .total-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        font-size: 16px;
+    }
+    
+    .total-row.grand-total {
+        font-size: 20px;
+        font-weight: 700;
+        color: #4f46e5;
+        padding-top: 16px;
+        border-top: 2px solid #e2e8f0;
+        margin-top: 8px;
+    }
+    
+    body.dark-mode .total-row.grand-total { border-top-color: #334155; }
+    
+    .btn {
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .btn-secondary {
+        background: #f1f5f9;
+        color: #334155;
+    }
+    
+    body.dark-mode .btn-secondary { background: #334155; color: #e2e8f0; }
+    
+    .btn-secondary:hover { background: #e2e8f0; }
+    body.dark-mode .btn-secondary:hover { background: #475569; }
+</style>
+
+<div class="container">
+    <div style="margin-bottom: 24px;">
+        <a href="/Admin/Orders" style="color: #64748b; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-size: 14px;">
+            <i class="fas fa-arrow-left"></i> Back to Orders
+        </a>
+    </div>
+    
+    <div class="card">
+        <div class="order-header">
+            <div>
+                <div class="order-number">#@Model.Order.OrderNumber</div>
+                <div class="order-date">Placed on @Model.Order.OrderDate.ToString("MMMM dd, yyyy 'at' HH:mm")</div>
+            </div>
+            <div>
+                @switch (Model.Order.Status)
+                {
+                    case RestaurantManager.Domain.Entities.OrderStatus.Pending:
+                        <span class="badge badge-pending"><i class="fas fa-clock"></i> Pending</span>
+                        break;
+                    case RestaurantManager.Domain.Entities.OrderStatus.Preparing:
+                        <span class="badge badge-preparing"><i class="fas fa-fire"></i> Preparing</span>
+                        break;
+                    case RestaurantManager.Domain.Entities.OrderStatus.Completed:
+                        <span class="badge badge-completed"><i class="fas fa-check"></i> Completed</span>
+                        break;
+                    case RestaurantManager.Domain.Entities.OrderStatus.Cancelled:
+                        <span class="badge badge-cancelled"><i class="fas fa-times"></i> Cancelled</span>
+                        break;
+                }
+            </div>
+        </div>
+        
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="info-label">Customer</div>
+                <div class="info-value">@Model.Order.User.FullName</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Email</div>
+                <div class="info-value">@Model.Order.User.Email</div>
+            </div>
+            @if (Model.Order.EstimatedReadyTime.HasValue)
+            {
+                <div class="info-item">
+                    <div class="info-label">Estimated Ready Time</div>
+                    <div class="info-value">@Model.Order.EstimatedReadyTime.Value.ToString("HH:mm")</div>
+                </div>
+            }
+            @if (Model.Order.CompletedAt.HasValue)
+            {
+                <div class="info-item">
+                    <div class="info-label">Completed At</div>
+                    <div class="info-value">@Model.Order.CompletedAt.Value.ToString("MMM dd, yyyy HH:mm")</div>
+                </div>
+            }
+        </div>
+        
+        <h3 class="section-title">Order Items</h3>
+        
+        <div class="order-items">
+            <div class="item-row header">
+                <div>Item</div>
+                <div>Quantity</div>
+                <div>Unit Price</div>
+                <div>Total</div>
+            </div>
+            
+            @foreach (var item in Model.Order.OrderItems)
+            {
+                <div class="item-row">
+                    <div style="font-weight: 500;">@item.MenuItem.Name</div>
+                    <div>@item.Quantity</div>
+                    <div>@item.UnitPrice.ToString("F2") MAD</div>
+                    <div style="font-weight: 600;">@item.TotalPrice.ToString("F2") MAD</div>
+                </div>
+            }
+        </div>
+        
+        <div class="total-section">
+            <div class="total-row grand-total">
+                <span>Total Amount</span>
+                <span>@Model.Order.TotalAmount.ToString("F2") MAD</span>
+            </div>
+        </div>
+        
+        @if (!string.IsNullOrEmpty(Model.Order.Notes))
+        {
+            <div style="margin-top: 24px; padding: 16px; background: #f8fafc; border-radius: 8px;">
+                <div style="font-weight: 600; color: #64748b; margin-bottom: 8px;">Notes</div>
+                <div style="color: #334155;">@Model.Order.Notes</div>
+            </div>
+        }
+    </div>
+</div>
