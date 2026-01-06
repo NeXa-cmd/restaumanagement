@@ -26,8 +26,11 @@ echo "?? Starting services..."
 docker-compose up -d
 
 echo ""
+echo "? Waiting for SQL Server to initialize (this may take 1-2 minutes)..."
+sleep 30
+
 echo "? Waiting for services to be healthy..."
-sleep 10
+sleep 30
 
 # Check status
 echo ""
