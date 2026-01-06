@@ -1,1 +1,32 @@
+# Build results
+[Bb]in/
+[Oo]bj/
 
+# Visual Studio
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.cache
+*.vsidx
+*.lock
+*.DotSettings.user
+
+# Environment
+.env
+appsettings.Development.json
+appsettings.Production.json
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+
+# Docker
+docker-volumes/
+
+# OS
+.DS_Store
+Thumbs.db
